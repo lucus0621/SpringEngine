@@ -66,6 +66,10 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
 		ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
 	}
+	if (ImGui::CollapsingHeader("Quaternion", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
 	mStandardEffect.DebugUI();
 	ImGui::End();
 }
