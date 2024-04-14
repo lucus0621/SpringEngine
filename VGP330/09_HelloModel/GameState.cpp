@@ -20,19 +20,10 @@ void GameState::Initialize()
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);	
 
-	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_1/Character01.model");
-	mShortHair = CreateRenderGroup(modelId);
-	for (auto& RenderObject : mShortHair)
-	{
-		RenderObject.transform.position.x = -1.0f;
-	}
+	Mesh ball = MeshBuilder::CreateSphere(60, 60, 0.5f);
+	mBall.MeshBuffer.Initialize(ball);
+	mBall.diffusemapId = TextureManager::Get->LoadTexture("misc/basketball.jpg");
 
-	modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_3/Character03.model");
-	mCuteman = CreateRenderGroup(modelId);
-	for (auto& RenderObject : mCuteman)
-	{
-		RenderObject.transform.position.x = 1.0f;
-	}
 }
 void GameState::Terminate()
 {

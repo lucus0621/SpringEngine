@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Common.h"
-
+#include "KeyFrame.h"
+#include "Animation.h"
+#include "AnimationBuilder.h"
 #include "BlendState.h"
 #include "BillboardEffect.h"
 #include "Camera.h"
