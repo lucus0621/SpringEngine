@@ -172,6 +172,11 @@ void SimpleDraw::AddAABB(float minX, float minY, float minZ, float maxX, float m
 	AddLine(blb, blf, color);
 }
 
+void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const Vector3& origin, const Color& color)
+{
+
+}
+
 void SimpleDraw::AddFilledAABB(const Vector3& min, const Vector3& max, const Color& color)
 {
 	AddFilledAABB(min.x, min.y, min.z, max.x, max.y, max.z, color);
@@ -247,14 +252,14 @@ void SimpleDraw::AddSphere(uint32_t slices, uint32_t rings, float radius, const 
 					radius * cos(phi0),
 					radius * cos(rotation1) * sin(phi0)
 				};
-			AddLine(v0, v1, color);
+			AddLine(v0 + oringin, v1 + oringin, color);
 
 			v1 = {
 					radius * sin(rotation0) * sin(phi1),
 					radius * cos(phi1),
 					radius * cos(rotation0) * sin(phi1)
 			};
-			AddLine(v0, v1, color);
+			AddLine(v0 + origin, v1 + oringin, color);
 		}
 	}
 }

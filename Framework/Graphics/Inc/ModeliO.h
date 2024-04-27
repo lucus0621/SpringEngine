@@ -3,6 +3,12 @@
 namespace SpringEngine::Graphics
 {
     struct Model;
+    class Animation;
+    class AnimationIO
+    {
+    public: static void Write(FILE* file, const Animation& animation);
+    public: static void Read(FILE* file, const Animation& animation);
+    };
 
     namespace ModelIO
     {
@@ -14,5 +20,8 @@ namespace SpringEngine::Graphics
 
         bool SaveSkeleton (std::filesystem::path filePath, const Model& model);
         void LoadSkeleton(std::filesystem::path filePath, Model& model);
+
+        bool SaveAnimations(std::filesystem::path filePath, const Model& model);
+        void LoadAnimations(std::filesystem::path filePath, Model& model);
     }
 }

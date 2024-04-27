@@ -49,9 +49,9 @@ namespace SpringEngine::Graphics
 			int useSpecMap = 1;
 			int useBumpMap = 1;
 			int useShadowMap = 1;
+			int useSkinning = 1;
 			float bumpWeight = 1.0f;
 			float depthBias = 1.0f;
-			float padding[1];
 
 		};
 
@@ -59,11 +59,13 @@ namespace SpringEngine::Graphics
 		using LightBuffer = TypedConstantBuffer<DirectionalLight>;
 		using MaterialBuffer = TypedConstantBuffer<Material>;
 		using SettingsBuffer = TypedConstantBuffer<SettingsData>;
+		using BoneTransformBuffer = ConstantBuffer;
 
 		TransformBuffer mTransformBuffer;
 		LightBuffer mLightBuffer;
 		MaterialBuffer mMaterialBuffer;
 		SettingsBuffer mSettingsBuffer;
+		BoneTransformBuffer mBoneTransformBuffer
 		Sampler mSampler;
 		VertexShader mVertexShader;
 		PixelShader mPixelShader;

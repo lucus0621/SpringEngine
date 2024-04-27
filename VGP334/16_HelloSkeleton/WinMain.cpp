@@ -10,6 +10,7 @@ int	WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 	config.appName = L"Hello Skeleton";
 	config.winWidth = 1280;
 	config.winHeight = 780;
+	config.debugDrawLimit = 100000;
 	mainApp.Run(config);
 
 	return(0);

@@ -5,6 +5,13 @@
 using namespace SpringEngine;
 using namespace SpringEngine::Graphics;
 
+
+void AnimationIO::Write(FILE* file, const Animation& animation)
+{
+	uint32_t count = animation.mPositionKeys.size();
+	fprintf_s(file, "PositionKeyCount: %d\n", count);
+}
+
 bool ModelIO::SaveModel(std::filesystem::path filePath, const Model& model)
 {
 	if (model.meshData.empty())
@@ -285,4 +292,42 @@ void SpringEngine::Graphics::ModelIO::LoadSkeleton(std::filesystem::path filePat
 		ReadMatrix(boneData->toParentTransform);
 	}
 	fclose(file);
+}
+bool ModelIO::SaveAnimation(std::filesystem::path filePath, const Model& model)
+{
+	if (model.skeleton == nullptr || model.skeleton->bones.empty() || model.animation.empty())
+	{
+		return false;
+	}
+	filePath.replace_extension("animset");
+
+	FILE* file = nullptr;
+	fopen_s(&file, filePath.u8string().c_str(), "w");
+	if (file == nullptr)
+	{
+		return false;
+	}
+	uint32_t animClipCount = model.animationClips.size();
+	fprintf_s(file, "AnimClipCount: %d\n", animClipCount);
+	for (uint32_t i = 0; i < animClipCount; ++i)
+	{
+		const AnimationClip& animClipData = model.animationClips[i];
+		fprintf_s(file, "AnimationClipName: %s\n", animClipData.name.c_str());
+		fprintf_s(file, "TickDuration: %f\n", animClipData.ticksDuration);
+		fprintf_s(file, "TickPersecond: %f\n", animClipData.ticksPerSecond);
+
+		uint32_t boneAnimCount = animClipData.boneAnimation.size();
+		fprintf_s(file, "BoneAnimCount: %d\n", boneAnimCount);
+		for (uint32_t b = 0; b < boneAnimCount; ++b)
+		{
+			const Animation* boneAnim = animClipData.boneAnimation[b].get();
+			if (boneAnim == nullptr)
+			{
+				fprintf_s(file, "[empty]\n");
+				continue;
+			}
+			fprintf_s(file, "[ANIMATION]\n");
+			AnimationIO::Write(file, *boneAnim);
+		}
+	}
 }
