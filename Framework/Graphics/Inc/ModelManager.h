@@ -22,6 +22,7 @@ namespace SpringEngine::Graphics
 
 		ModelId GetModelId(const std::filesystem::path& filepath);
 		ModelId LoadModel(const std::filesystem::path& filepath);
+		void AddAnimation(ModelId id, const std::filesystem::path& filepath);
 		const Model* GetModel(ModelId id);
 
 	private:

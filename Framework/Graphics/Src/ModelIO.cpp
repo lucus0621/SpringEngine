@@ -10,6 +10,22 @@ void AnimationIO::Write(FILE* file, const Animation& animation)
 {
 	uint32_t count = animation.mPositionKeys.size();
 	fprintf_s(file, "PositionKeyCount: %d\n", count);
+	for (auto& k : animation.mPositionKeys)
+	{
+		fprintf_s(file, "%f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z);
+	}
+	count = animation.mRotationKeys.size();
+	fprintf_s(file, "RotationKeyCount: %d\n", count);
+	for (auto& k : animation.mRotationKeys)
+	{
+		fprintf_s(file, "%f %f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z, k.key.w);
+	}
+	count = animation.mScaleKeys.size();
+	fprintf_s(file, "ScaleKeyCount: %d\n", count);
+	for (auto& k : animation.mScaleKeys)
+	{
+		fprintf_s(file, "%f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z);
+	}
 }
 
 bool ModelIO::SaveModel(std::filesystem::path filePath, const Model& model)
