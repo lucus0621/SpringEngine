@@ -1,4 +1,5 @@
 #pragma once
+
 #include "KeyFrame.h"
 #include "Transform.h"
 
@@ -16,5 +17,10 @@ namespace SpringEngine::Graphics
 		Math::Vector3 GetScale(float time) const;
 
 		friend class AnimationBuilder;
+
+		PositionKeys mPositionKeys;
+		RotationKeys mRotationKeys;
+		ScaleKeys mScaleKeys;
+		float mDuration;
 	};
 }

@@ -1,15 +1,18 @@
 #pragma once
 
 #include "Common.h"
-#include "KeyFrame.h"
+
 #include "Animation.h"
 #include "AnimationBuilder.h"
+#include "AnimationUtil.h"
 #include "BlendState.h"
 #include "BillboardEffect.h"
+#include "Bone.h"
 #include "Camera.h"
 #include "Colors.h"
 #include "ConstantBuffer.h"
 #include "DebugUI.h"
+#include "KeyFrame.h"
 #include "GraphicsSystem.h"
 #include "LightTypes.h"
 #include "MeshBuffer.h"
@@ -26,6 +29,7 @@
 #include "SimpleDraw.h"
 #include "SimpleEffect.h"
 #include "ShadowEffect.h"
+#include "Skeleton.h"
 #include "StandardEffect.h"
 #include "Terrain.h"
 #include "TerrainEffect.h"

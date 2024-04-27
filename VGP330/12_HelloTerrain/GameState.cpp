@@ -31,7 +31,7 @@ void GameState::Initialize()
 	mShadowEffect.Initialize();
 	mShadowEffect.SetDirectionalLight(mDirectionalLight);
 
-	
+
 	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_1/Character01.model");
 	mGoblin = CreateRenderGroup(modelId);
 
@@ -75,18 +75,18 @@ void GameState::Update(const float deltaTime)
 void GameState::Render()
 {
 	mShadowEffect.Begin();
-		DrawRenderGroup(mShadowEffect, mVanguard);
-		DrawRenderGroup(mShadowEffect, mGoblin);
+	DrawRenderGroup(mShadowEffect, mVanguard);
+	DrawRenderGroup(mShadowEffect, mGoblin);
 	mShadowEffect.End();
 
 	mTerrainEffect.Begin();
-		mTerrainEffect.Render(mGround);
+	mTerrainEffect.Render(mGround);
 	mTerrainEffect.End();
 
 
 	mStandardEffect.Begin();
-		DrawRenderGroup(mStandardEffect, mVanguard);
-		DrawRenderGroup(mStandardEffect, mGoblin);
+	DrawRenderGroup(mStandardEffect, mVanguard);
+	DrawRenderGroup(mStandardEffect, mGoblin);
 	mStandardEffect.End();
 
 }
@@ -95,7 +95,7 @@ void GameState::DebugUI()
 	ImGui::Begin("Debug control", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 	if (ImGui::CollapsingHeader("Light", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		if (ImGui::DragFloat3("Direction",&mDirectionalLight.direction.x,0.1f))
+		if (ImGui::DragFloat3("Direction", &mDirectionalLight.direction.x, 0.1f))
 		{
 			mDirectionalLight.direction = Math::Normalize(mDirectionalLight.direction);
 		}
@@ -132,6 +132,7 @@ void GameState::DebugUI()
 			SetRenderGroupPosition(mGoblin, mGoblinPosition);
 		}
 	}
+
 	mStandardEffect.DebugUI();
 	mTerrainEffect.DebugUI();
 	mShadowEffect.DebugUI();
@@ -173,7 +174,7 @@ void GameState::UpdateCameraControl(float deltaTime)
 		mCamera.Pitch(input->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
 	float characterHeight = 3.0f;
-	Math:Vector3 cameraPos = mCamera.GetPosition();
+Math:Vector3 cameraPos = mCamera.GetPosition();
 	cameraPos.y = mTerrain.GetHeight(cameraPos) + characterHeight;
 	mCamera.SetPosition(cameraPos);
 }

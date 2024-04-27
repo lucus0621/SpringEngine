@@ -20,10 +20,19 @@ void GameState::Initialize()
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);	
 
-	Mesh ball = MeshBuilder::CreateSphere(60, 60, 0.5f);
-	mBall.MeshBuffer.Initialize(ball);
-	mBall.diffusemapId = TextureManager::Get->LoadTexture("misc/basketball.jpg");
+	ModelId modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_1/Character01.model");
+	mShortHair = CreateRenderGroup(modelId);
+	for (auto& RenderObject : mShortHair)
+	{
+		RenderObject.transform.position.x = -1.0f;
+	}
 
+	modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_3/Character03.model");
+	mCuteman = CreateRenderGroup(modelId);
+	for (auto& RenderObject : mCuteman)
+	{
+		RenderObject.transform.position.x = 1.0f;
+	}
 }
 void GameState::Terminate()
 {
@@ -56,10 +65,6 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Ambient##Light", &mDirectionalLight.ambient.r);
 		ImGui::ColorEdit4("Diffuse##Light", &mDirectionalLight.diffuse.r);
 		ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
-	}
-	if (ImGui::CollapsingHeader("Quaternion", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-
 	}
 	mStandardEffect.DebugUI();
 	ImGui::End();

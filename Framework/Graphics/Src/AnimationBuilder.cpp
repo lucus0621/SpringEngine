@@ -1,43 +1,47 @@
-#include"Precompiled.h"
-#include"AnimationBuilder.h"
+#include "Precompiled.h"
+
+#include "AnimationBuilder.h"
 
 using namespace SpringEngine;
 using namespace SpringEngine::Graphics;
 
-namespace {
+namespace
+{
 	template<class T>
-	void PushKey(Keyframes<T>& keyframes, const T& value, float t, EaseType easeType = EaseType::Linear)
+	inline void PushKey(keyFrames<T>& keyframes, const T& value, float t, EaseType easetype)
 	{
-		ASSERT(keyframes.empty() || keyframes.back().time <= t, "AnimationBuilder:")
-		keyframes.emplace_back(value, t, easeType);
+		ASSERT(keyframes.empty() || keyframes.back().time <= t, "Animation: ");
+		keyframes.emplace_back(value, t, easetype);
 	}
 }
-
 AnimationBuilder& AnimationBuilder::AddPositionKey(const Math::Vector3& pos, float time, EaseType easeType)
 {
-	PushKey(mWorkingCopy.mPositionKeys, pot, time.easeType);
-	mWorkingCopy.mDuration = Math::Max(mWorkingCopy.GetDuration,time)
+	PushKey(mWorkingCopy.mPositionKeys, pos, time, easeType);
+	mWorkingCopy.mDuration = Math::Max(mWorkingCopy.mDuration, time);
 	return *this;
 }
 
-AnimationBuilder& AnimationBuilder::AddRotation(const Math::Vector3& rot, float time, EaseType easeType)
+AnimationBuilder& AnimationBuilder::AddRotationKey(const Math::Quaternion& rot, float time, EaseType easeType)
 {
-	// TODO: insert return statement here
+
+	PushKey(mWorkingCopy.mRotationKeys, rot, time, easeType);
+	mWorkingCopy.mDuration = Math::Max(mWorkingCopy.mDuration, time);
 	return *this;
 }
 
 AnimationBuilder& AnimationBuilder::AddScaleKey(const Math::Vector3& scale, float time, EaseType easeType)
 {
-	// TODO: insert return statement here
+
+	PushKey(mWorkingCopy.mScaleKeys, scale, time, easeType);
+	mWorkingCopy.mDuration = Math::Max(mWorkingCopy.mDuration, time);
 	return *this;
 }
 
-Animation AnimationBuilder::Build()
+Animation SpringEngine::Graphics::AnimationBuilder::Build()
 {
 	ASSERT(!mWorkingCopy.mPositionKeys.empty() ||
 		!mWorkingCopy.mRotationKeys.empty() ||
 		!mWorkingCopy.mScaleKeys.empty(),
-		"AnimationBuilder: no Animation")
+		"AnimationBuilder: no animaiton keys are present");
 	return mWorkingCopy;
-
 }

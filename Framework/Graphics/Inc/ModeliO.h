@@ -11,5 +11,8 @@ namespace SpringEngine::Graphics
 
         bool SaveMaterial(std::filesystem::path filePath, const Model& model);
         void LoadMaterial(std::filesystem::path filePath, Model& model);
+
+        bool SaveSkeleton (std::filesystem::path filePath, const Model& model);
+        void LoadSkeleton(std::filesystem::path filePath, Model& model);
     }
 }
