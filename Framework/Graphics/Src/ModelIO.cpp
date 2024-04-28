@@ -1,7 +1,7 @@
 #include "Precompiled.h"
 #include "ModelIO.h"
 #include "Model.h"
-
+#include "AnimationBuilder.h"
 using namespace SpringEngine;
 using namespace SpringEngine::Graphics;
 
@@ -26,6 +26,32 @@ void AnimationIO::Write(FILE* file, const Animation& animation)
 	{
 		fprintf_s(file, "%f %f %f %f\n", k.time, k.key.x, k.key.y, k.key.z);
 	}
+}
+
+void AnimationIO::Read(FILE* file, Animation& animation)
+{
+	AnimationBuilder builder;
+	uint32_t count = 0;
+	float time = 0.0f;
+	fprintf_s(file, "PositionKeyCount: %d\n", &count);
+	for (uint32_t k = 0; k < count; ++k)
+	{
+		Math::Vector3 pos;
+		fprintf_s(file, "%f %f %f %f\n", &time, &pos.x, &pos.y, &pos.z);
+	}
+	fprintf_s(file, "RotationKeyCount: %d\n", &count);
+	for (uint32_t k = 0; k < count; ++k)
+	{
+		Math::Quaternion rot;
+		fprintf_s(file, "%f %f %f %f %f\n", &time, &rot.x, &rot.y, &rot.z, &rot.w);
+	}
+	fprintf_s(file, "ScaleKeyCount: %d\n", &count);
+	for (uint32_t k = 0; k < count; ++k)
+	{
+		Math::Vector3 scale;
+		fprintf_s(file, "%f %f %f %f\n", &time, &scale.x, &scale.y, &scale.z);
+	}
+	animation = builder.Build();
 }
 
 bool ModelIO::SaveModel(std::filesystem::path filePath, const Model& model)
@@ -346,4 +372,5 @@ bool ModelIO::SaveAnimation(std::filesystem::path filePath, const Model& model)
 			AnimationIO::Write(file, *boneAnim);
 		}
 	}
+	fclose(file);
 }
