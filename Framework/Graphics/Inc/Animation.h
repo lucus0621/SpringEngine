@@ -18,6 +18,7 @@ namespace SpringEngine::Graphics
 
 		friend class AnimationBuilder;
 		friend class AnimationIO;
+
 		PositionKeys mPositionKeys;
 		RotationKeys mRotationKeys;
 		ScaleKeys mScaleKeys;

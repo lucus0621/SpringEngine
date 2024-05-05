@@ -10,6 +10,7 @@ using namespace SpringEngine;
 using namespace SpringEngine::Graphics;
 
 static constexpr size_t MaxBoneCount = 256;
+
 void StandardEffect::Initialize(const std::filesystem::path& filePath)
 {
 	mTransformBuffer.Initialize();
@@ -96,11 +97,11 @@ void StandardEffect::Render(const RenderObject& renderObject)
 	if (settingsData.useSkinning > 0)
 	{
 		AnimationUtil::BoneTransforms boneTransforms;
-		AnimationUtil::ComputeBoneTransforms(renderObject.modelId, boneTransforms);
+		AnimationUtil::ComputeBoneTransforms(renderObject.modelId, boneTransforms,renderObject.animator);
 		AnimationUtil::ApplyBoneOfset(renderObject.modelId, boneTransforms);
 		for (Math::Matrix4& m : boneTransforms)
 		{
-			m = Transpose(m)
+			m = Transpose(m);
 		}
 		boneTransforms.resize(MaxBoneCount);
 		mBoneTransformBuffer.Update(boneTransforms.data());
@@ -170,7 +171,7 @@ void StandardEffect::DebugUI()
 
 		ImGui::DragFloat("DepthBias", &mSettingsData.depthBias, 0.000001f, 0.0f, 1.0f, "%.6f");
 
-		bool useSkinning = mSettingsData.useBumpMap > 0;
+		bool useSkinning = mSettingsData.useSkinning > 0;
 		if (ImGui::Checkbox("UseSkinning", &useSkinning))
 		{
 			mSettingsData.useSkinning = useSkinning ? 1 : 0;

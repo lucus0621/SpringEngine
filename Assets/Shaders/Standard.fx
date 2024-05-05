@@ -48,7 +48,7 @@ Texture2D bumpMap : register(t3);
 Texture2D shadowMap : register(t4);
 SamplerState textureSampler : register(s0);
 
-static matrix Identidy =
+static matrix Identity =
 {
 	1,0,0,0,
 	0,1,0,0,
@@ -56,7 +56,7 @@ static matrix Identidy =
 	0,0,0,1
 };
 
-matrix GetBoneTransform(int4 indics, float4 weights)
+matrix GetBoneTransform(int4 indices, float4 weights)
 {
 	if (length(weights) <= 0.0f)
 	{
@@ -66,7 +66,7 @@ matrix GetBoneTransform(int4 indics, float4 weights)
 	matrix transform = boneTransforms[indices[0]] * weights[0];
 	for (int i = 1; i < 4; i++)
 	{
-		transform += boneTransforms[indices[i]] * weight[i];
+		transform += boneTransforms[indices[i]] * weights[i];
 	}
 
 	return transform;
@@ -78,7 +78,7 @@ struct VS_INPUT
 	float3 normal : NORMAL;
 	float3 tangent : TANGENT;
 	float2 texCoord : TEXCOORD;
-	int4 blendIndics : BLENDINDICES;
+	int4 blendIndices : BLENDINDICES;
 	float4 blendWeights : BLENDWEIGHTS;
 };
 
@@ -100,9 +100,9 @@ VS_OUTPUT VS(VS_INPUT input)
 
 	if (useSkinning)
 	{
-		matrix boneTransforms = GetBoneTransform(input.blendIndices, input.blendWeights);
-		toWorld = mull(boneTransform, toWorld);
-		toNDC = mull(boneTransform, toNDC)
+		matrix boneTransform = GetBoneTransform(input.blendIndices, input.blendWeights);
+		toWorld = mul(boneTransform, toWorld);
+		toNDC = mul(boneTransform, toNDC);
 	}
 
 	float3 localPosition = input.position;

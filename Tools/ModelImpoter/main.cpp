@@ -416,12 +416,12 @@ int main(int argc, char* argv[])
 				for (uint32_t keyIndex = 0; keyIndex < aiBoneAnim->mNumRotationKeys; ++keyIndex)
 				{
 					const aiQuatKey& rotKey = aiBoneAnim->mRotationKeys[keyIndex];
-					builder.AddRotationKey(ToQuaternion(rotKey.mValue)* arguments.scale, static_cast<float>(rotKey.mTime));
+					builder.AddRotationKey(ToQuaternion(rotKey.mValue), static_cast<float>(rotKey.mTime));
 				}
 				for (uint32_t keyIndex = 0; keyIndex < aiBoneAnim->mNumScalingKeys; ++keyIndex)
 				{
 					const aiVectorKey& scaleKey = aiBoneAnim->mScalingKeys[keyIndex];
-					builder.AddScaleKey(ToVector3(scaleKey.mValue)* arguments.scale, static_cast<float>(scaleKey.mTime));
+					builder.AddScaleKey(ToVector3(scaleKey.mValue), static_cast<float>(scaleKey.mTime));
 				}
 				*boneAnimation = builder.Build();
 			}
@@ -444,9 +444,9 @@ int main(int argc, char* argv[])
 		printf("Failed to save model data...\n");
 	}
 	printf("Saving Animation...\n");
-	if (!ModelIO::SaveSkeleton(arguments.outputFileName, model))
+	if (!ModelIO::SaveAnimations(arguments.outputFileName, model))
 	{
-		printf("Failed to save model data...\n");
+		printf("Failed to save Animation data...\n");
 	}
 	printf("All Done\n");
 	return 0;

@@ -51,7 +51,7 @@ namespace SpringEngine::Graphics
 			int useShadowMap = 1;
 			int useSkinning = 1;
 			float bumpWeight = 1.0f;
-			float depthBias = 1.0f;
+			float depthBias = 0.0f;
 
 		};
 
@@ -65,7 +65,7 @@ namespace SpringEngine::Graphics
 		LightBuffer mLightBuffer;
 		MaterialBuffer mMaterialBuffer;
 		SettingsBuffer mSettingsBuffer;
-		BoneTransformBuffer mBoneTransformBuffer
+		BoneTransformBuffer mBoneTransformBuffer;
 		Sampler mSampler;
 		VertexShader mVertexShader;
 		PixelShader mPixelShader;

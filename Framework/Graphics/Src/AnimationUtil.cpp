@@ -7,26 +7,37 @@ using namespace SpringEngine::Graphics;
 
 namespace
 {
-	void ComputeBoneTransformRecursive(const Bone* bone, AnimationUtil::BoneTransforms bonTransforms)
+	void ComputeBoneTransformRecursive(const Bone* bone, AnimationUtil::BoneTransforms& boneTransforms, const Animator* animator)
 	{
 		if (bone == nullptr)
 		{
 			return;
 		}
-		bonTransforms[bone->index] = bone->toParentTransform;
+		if (animator != nullptr)
+		{
+			boneTransforms[bone->index] = animator->GetToParentTransform(bone);
+		}
+		else
+		{
+			boneTransforms[bone->index] = bone->toParentTransform;
+		}
 		if (bone->parent != nullptr)
 		{
-			bonTransforms[bone->index] = bonTransforms[bone->index];
+			boneTransforms[bone->index] = boneTransforms[bone->index] * boneTransforms[bone->parentIndex];
+		}
+		for (const Bone* child : bone->children)
+		{
+			ComputeBoneTransformRecursive(child, boneTransforms, animator);
 		}
 	}
 }
-void AnimationUtil::ComputeBoneTransforms(ModelId id, BoneTransforms& boneTransforms)
+void AnimationUtil::ComputeBoneTransforms(ModelId id, BoneTransforms& boneTransforms, const Animator* animator)
 {
 	const Model* model = ModelManager::Get()->GetModel(id);
 	if (model->skeleton != nullptr)
 	{
 		boneTransforms.resize(model->skeleton->bones.size(), Math::Matrix4::Identity);
-		ComputeBoneTransformRecursive(model->skeleton->root, boneTransforms);
+		ComputeBoneTransformRecursive(model->skeleton->root, boneTransforms, animator);
 	}
 
 }
@@ -38,7 +49,7 @@ void AnimationUtil::ApplyBoneOfset(ModelId id, BoneTransforms& boneTransforms)
 	{
 		for (const auto& bone : model->skeleton->bones)
 		{
-			ComputeBoneTransformRecursive(model->skeleton->root, boneTransforms);
+			boneTransforms[bone->index] = bone->offsetTransform * boneTransforms[bone->index];
 		}
 	}
 }
@@ -55,7 +66,7 @@ void AnimationUtil::DrawSkeleton(ModelId id, BoneTransforms& boneTransforms)
 				const Math::Vector3 posA = Math::GetTranslation(boneTransforms[bone->index]);
 				const Math::Vector3 posB = Math::GetTranslation(boneTransforms[bone->parentIndex]);
 				SimpleDraw::AddLine(posA, posB, Colors::Blue);
-				SimpleDraw::AddSphere(4,4,0.03f,posA,Colors::Pink);
+				SimpleDraw::AddSphere(4, 4, 0.03f, posA, Colors::Pink);
 			}
 		}
 	}

@@ -2,16 +2,21 @@
 #include "Animator.h"
 
 using namespace SpringEngine;
-
+using namespace SpringEngine::Graphics;
 
 void Animator::Initialize(ModelId id)
 {
-
+	mModelId = id;
+	mIsLooping = false;
+	mAnimationTick = 0.0f;
+	mClipIndex = -1;
 }
 
 void Animator::PlayAnimation(int clipIndex, bool looping)
 {
-
+	mClipIndex = clipIndex;
+	mIsLooping = looping;
+	mAnimationTick = 0.0f;
 }
 
 void Animator::Update(float deltaTime)
@@ -22,7 +27,21 @@ void Animator::Update(float deltaTime)
 	}
 	const Model* model = ModelManager::Get()->GetModel(mModelId);
 	const AnimationClip& animClip = model->animationClips[mClipIndex];
-	mAnimationTick += animClip.tickPerSecond * deltatime;
+	mAnimationTick += animClip.ticksPerSecond * deltaTime;
+	if (mAnimationTick > animClip.ticksDuration)
+	{
+		if (mIsLooping)
+		{
+			while (mAnimationTick > animClip.ticksDuration)
+			{
+				mAnimationTick -= animClip.ticksDuration;
+			}
+		}
+		else
+		{
+			mAnimationTick = animClip.ticksDuration;
+		}
+	}
 }
 
 bool Animator::IsFinished() const
@@ -33,7 +52,7 @@ bool Animator::IsFinished() const
 	}
 	const Model* model = ModelManager::Get()->GetModel(mModelId);
 	const AnimationClip& animClip = model->animationClips[mClipIndex];
-	return mAnimationTick >= animClip.tickDuration;
+	return mAnimationTick >= animClip.ticksDuration;
 }
 
 size_t SpringEngine::Graphics::Animator::GetAnimationCount() const
@@ -50,10 +69,10 @@ Math::Matrix4 SpringEngine::Graphics::Animator::GetToParentTransform(const Bone*
 	}
 	const Model* model = ModelManager::Get()->GetModel(mModelId);
 	const AnimationClip& animClip = model->animationClips[mClipIndex];
-	const AnimationClip8 animation = animClip.boneAnimation[bone->index].get();
+	const Animation* animation = animClip.boneAnimation[bone->index].get();
 	if (animation == nullptr)
 	{
-		return bone->toParentTransform;
+		return Math::Matrix4::Identity;
 	}
 	Transform transform = animation->GetTransform(mAnimationTick);
 	return transform.GetMatrix4();

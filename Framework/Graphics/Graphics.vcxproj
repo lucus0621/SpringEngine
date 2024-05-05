@@ -46,7 +46,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -142,7 +142,9 @@
   <ItemGroup>
     <ClInclude Include="Inc\Animation.h" />
     <ClInclude Include="Inc\AnimationBuilder.h" />
+    <ClInclude Include="Inc\AnimationClip.h" />
     <ClInclude Include="Inc\AnimationUtil.h" />
+    <ClInclude Include="Inc\Animator.h" />
     <ClInclude Include="Inc\BillboardEffect.h" />
     <ClInclude Include="Inc\BlendState.h" />
     <ClInclude Include="Inc\Bone.h" />
@@ -186,6 +188,7 @@
     <ClCompile Include="Src\Animation.cpp" />
     <ClCompile Include="Src\AnimationBuilder.cpp" />
     <ClCompile Include="Src\AnimationUtil.cpp" />
+    <ClCompile Include="Src\Animator.cpp" />
     <ClCompile Include="Src\BillboardEffect.cpp" />
     <ClCompile Include="Src\BlendState.cpp" />
     <ClCompile Include="Src\Camera.cpp" />

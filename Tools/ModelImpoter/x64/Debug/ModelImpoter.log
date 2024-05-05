@@ -1,1 +1,8 @@
-﻿
+﻿  main.cpp
+C:\Users\LCV2112650\Desktop\SpringEngine\Framework\Graphics\Inc\AnimationUtil.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\LCV2112650\Desktop\SpringEngine\Tools\ModelImpoter\main.cpp(36,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\LCV2112650\Desktop\SpringEngine\Tools\ModelImpoter\main.cpp(126,4): warning C4018: '<': signed/unsigned mismatch
+  ModelImpoter.vcxproj -> C:\Users\LCV2112650\Desktop\SpringEngine\x64\Debug\ModelImpoter.exe
+  C:\Users\LCV2112650\Desktop\SpringEngine\External\assimp-5.2.5\bin\assimp-vc143-mt.dll
+  C:\Users\LCV2112650\Desktop\SpringEngine\External\assimp-5.2.5\bin\assimp-vc143-mtd.dll
+          2 file(s) copied.
