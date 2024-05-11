@@ -1,3 +1,76 @@
-﻿  AnimationUtil.cpp
-C:\Users\LCV2112650\Desktop\SpringEngine\Framework\Graphics\Inc\AnimationUtil.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Graphics.vcxproj -> C:\Users\LCV2112650\Desktop\SpringEngine\x64\Debug\Graphics.lib
+﻿  Precompiled.cpp
+  Animation.cpp
+  AnimationBuilder.cpp
+  AnimationUtil.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Inc\AnimationUtil.h(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  Animator.cpp
+  BillboardEffect.cpp
+  BlendState.cpp
+  Camera.cpp
+  ConstantBuffer.cpp
+  DebugUI.cpp
+  GraphicsSystem.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\GraphicsSystem.cpp(123,109): warning C4244: “参数”: 从“float”转换到“UINT8”，可能丢失数据
+  MeshBuffer.cpp
+  MeshBuilder.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\MeshBuilder.cpp(284,91): warning C4267: “参数”: 从“size_t”转换到“uint32_t”，可能丢失数据
+  ModelIO.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(11,49): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(17,40): warning C4267: “=”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(23,37): warning C4267: “=”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(216,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 1 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(216,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 2 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(216,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 3 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(216,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 4 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(217,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 1 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(217,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 2 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(217,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 3 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(217,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 4 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(218,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 1 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(218,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 2 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(218,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 3 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(218,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 4 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(219,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 1 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(219,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 2 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(219,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 3 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(219,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 4 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(220,18): warning C4477: “fscanf_s”: 格式字符串“%f”需要类型“float *”的参数，但可变参数 1 拥有了类型“const float *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(252,51): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(262,57): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(297,51): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(322,57): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(356,54): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(365,61): warning C4267: “初始化”: 从“size_t”转换到“uint32_t”，可能丢失数据
+  ModelManager.cpp
+  PixelShader.cpp
+  PostProcessingEffect.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\PostProcessingEffect.cpp(109,6): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  RenderObject.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\RenderObject.cpp(20,2): warning C4477: “snprintf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 4 拥有了类型“SpringEngine::Graphics::ModelId”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\RenderObject.cpp(20,2): message : 请考虑在格式字符串中使用“%zd”
+  RenderTarget.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\RenderTarget.cpp(83,77): warning C4244: “参数”: 从“float”转换到“UINT8”，可能丢失数据
+  Sampler.cpp
+  ShadowEffect.cpp
+  正在生成代码...
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(187): warning C4715: “SpringEngine::Graphics::ModelIO::SaveMaterial”: 不是所有的控件路径都返回值
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\ModelIO.cpp(380): warning C4715: “SpringEngine::Graphics::ModelIO::SaveAnimations”: 不是所有的控件路径都返回值
+  正在编译...
+  SimpleDraw.cpp
+  SimpleEffect.cpp
+  StandardEffect.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Inc\AnimationUtil.h(3,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  Terrain.cpp
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(12,2): warning C4477: “snprintf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 4 拥有了类型“const std::filesystem::path::value_type *”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(12,2): message : 请考虑在格式字符串中使用“%ls”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(12,2): message : 请考虑在格式字符串中使用“%lls”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(12,2): message : 请考虑在格式字符串中使用“%Ls”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(12,2): message : 请考虑在格式字符串中使用“%ws”
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(73,32): warning C4018: “>=”: 有符号/无符号不匹配
+C:\Users\lucus\OneDrive\Desktop\SpringEngine\Framework\Graphics\Src\Terrain.cpp(73,53): warning C4018: “>=”: 有符号/无符号不匹配
+  TerrainEffect.cpp
+  Texture.cpp
+  TextureManager.cpp
+  VertexShader.cpp
+  正在生成代码...
+  Graphics.vcxproj -> C:\Users\lucus\OneDrive\Desktop\SpringEngine\x64\Debug\Graphics.lib
