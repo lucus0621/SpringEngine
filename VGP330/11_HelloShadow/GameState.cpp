@@ -33,8 +33,8 @@ void GameState::Initialize()
 	}
 
 	modelId = ModelManager::Get()->LoadModel(L"../../Assets/Models/Character_3/Character03.model");
-	mVangaurd = CreateRenderGroup(modelId);
-	for (auto& RenderObject : mVangaurd)
+	mVanguard = CreateRenderGroup(modelId);
+	for (auto& RenderObject : mVanguard)
 	{
 		RenderObject.transform.position.x = 1.0f;
 	}
@@ -46,7 +46,7 @@ void GameState::Initialize()
 void GameState::Terminate()
 {
 	mGround.Terminate();
-	CleanupRenderGroup(mVangaurd);
+	CleanupRenderGroup(mVanguard);
 	CleanupRenderGroup(mGoblin);
 	mStandardEffect.Terminate();
 }
