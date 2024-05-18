@@ -7,7 +7,7 @@ int	WINAPI WinMain(HINSTANCE instance, HINSTANCE, LPSTR, int)
 	mainApp.AddState<GameState>("GameState");
 
 	SpringEngine::AppConfig config;
-	config.appName = L"Hello Skeleton Animation";
+	config.appName = L"Hello Particle System";
 	config.winWidth = 1280;
 	config.winHeight = 780;
 	config.debugDrawLimit = 100000;
