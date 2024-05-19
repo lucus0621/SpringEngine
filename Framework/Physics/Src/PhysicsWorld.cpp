@@ -5,7 +5,7 @@
 using namespace SpringEngine;
 using namespace SpringEngine::Physics;
 
-namespace 
+namespace
 {
 	std::unique_ptr<PhysicsWorld> sPhysicsWorld;
 }
@@ -46,10 +46,16 @@ void PhysicsWorld::Initialize(const Settings& settings)
 	msolver = new btSequentialImpulseConstraintSolver();
 	mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher, mInterface, msolver, mCollisionConfiguration);
 	mDynamicsWorld->setGravity(ConvertTobtVector3(settings.gravity));
+	mDynamicsWorld->setDebugDrawer(&mPhysicsDebugDraw);
+
+	mSoftBodyWorld = new btSoftRigidDynamicsWorld(mDispatcher, mInterface, msolver, mCollisionConfiguration);
+	mSoftBodyWorld->setGravity(ConvertTobtVector3(settings.gravity));
+	mSoftBodyWorld->setDebugDrawer(&mPhysicsDebugDraw);
 }
 
 void PhysicsWorld::Terminate()
 {
+	SafeDelete(mSoftBodyWorld);
 	SafeDelete(mDynamicsWorld);
 	SafeDelete(msolver);
 	SafeDelete(mInterface);
@@ -60,12 +66,38 @@ void PhysicsWorld::Terminate()
 void PhysicsWorld::Update(float deltaTime)
 {
 	mDynamicsWorld->stepSimulation(deltaTime, mSettings.simulationSteps, mSettings.fixedTimeStep);
-	
+	mSoftBodyWorld->stepSimulation(deltaTime, mSettings.simulationSteps, mSettings.fixedTimeStep);
+	for (PhysicsObject* obj : mPhysicsObjects)
+	{
+		obj->Update();
+	}
 }
 
 void PhysicsWorld::DebugUI()
 {
-	//later
+	if (ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Checkbox("DebugDraw", &mDebugDraw);
+		if (mDebugDraw)
+		{
+			int debugMode = mPhysicsDebugDraw.getDebugMode();
+			bool isEnable = (debugMode & btIDebugDraw::DBG_DrawWireframe);
+			if (ImGui::Checkbox("[DBG]Wireframe", &isEnable))
+			{
+				debugMode = (isEnable) ? debugMode | btIDebugDraw::DBG_DrawWireframe : debugMode & ~btIDebugDraw::DBG_DrawWireframe;
+			}
+
+			isEnable = (debugMode & btIDebugDraw::DBG_DrawAabb);
+			if (ImGui::Checkbox("[DBG]WireAABB", &isEnable))
+			{
+				debugMode = (isEnable) ? debugMode | btIDebugDraw::DBG_DrawAabb : debugMode & ~btIDebugDraw::DBG_DrawAabb;
+			}
+
+			mPhysicsDebugDraw.setDebugMode(debugMode);
+			mDynamicsWorld->debugDrawWorld();
+			mSoftBodyWorld->debugDrawWorld();
+		}
+	}
 }
 
 void PhysicsWorld::Register(PhysicsObject* physicsObject)
@@ -74,7 +106,11 @@ void PhysicsWorld::Register(PhysicsObject* physicsObject)
 	if (iter == mPhysicsObjects.end())
 	{
 		mPhysicsObjects.push_back(physicsObject);
-		if (physicsObject->GetRigidBody() != nullptr)
+		if (physicsObject->GetSoftBody() != nullptr)
+		{
+			mSoftBodyWorld->addSoftBody(physicsObject->GetSoftBody());
+		}
+		else if (physicsObject->GetRigidBody() != nullptr)
 		{
 			mDynamicsWorld->addRigidBody(physicsObject->GetRigidBody());
 		}
@@ -86,10 +122,20 @@ void PhysicsWorld::Unregister(PhysicsObject* physicsObject)
 	auto iter = std::find(mPhysicsObjects.begin(), mPhysicsObjects.end(), physicsObject);
 	if (iter == mPhysicsObjects.end())
 	{
-		if (physicsObject->GetRigidBody() != nullptr)
+		if (physicsObject->GetSoftBody() != nullptr)
+		{
+			mSoftBodyWorld->removeSoftBody(physicsObject->GetSoftBody());
+		}
+		else if (physicsObject->GetRigidBody() != nullptr)
 		{
 			mDynamicsWorld->removeRigidBody(physicsObject->GetRigidBody());
 		}
 		mPhysicsObjects.erase(iter);
 	}
+}
+
+btSoftBody* PhysicsWorld::CreateSoftBody(int nodeCount)
+{
+	btSoftBody* softBody = new btSoftBody(&mSoftBodyWorld->getWorldInfo(), nodeCount, nullptr, nullptr);
+	return softBody;
 }

@@ -20,12 +20,17 @@ private:
 
 
 	//ball info
-	SpringEngine::Graphics::RenderObject mBall;
-	SpringEngine::Physics::CollisionShape mBallShape;
-	SpringEngine::Physics::RigidBody mBallRB;
-
+	struct BallInfo
+	{
+		SpringEngine::Graphics::RenderObject ball;
+		SpringEngine::Physics::CollisionShape ballShape;
+		SpringEngine::Physics::RigidBody ballRB;
+	};
+	std::vector<BallInfo> mBalls;
 	//ground info
 	SpringEngine::Graphics::RenderObject mGround;
 	SpringEngine::Physics::CollisionShape mGroundShape;
 	SpringEngine::Physics::RigidBody mGroundRB;
+
+
 };

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "PhysicsDebugDraw.h"
 
 namespace SpringEngine::Physics
 {
@@ -39,5 +40,12 @@ namespace SpringEngine::Physics
 
 		using PhysicsObjects = std::vector<PhysicsObject*>;
 		PhysicsObjects mPhysicsObjects;
+
+		PhysicsDebugDraw mPhysicsDebugDraw;
+		bool mDebugDraw = false;
+		//softbody 
+		btSoftRigidDynamicsWorld* mSoftBodyWorld = nullptr;
+		friend class SoftBody;
+		btSoftBody* CreateSoftBody(int nodeCount);
 	};
 }

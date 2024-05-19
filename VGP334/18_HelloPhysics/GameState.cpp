@@ -23,17 +23,34 @@ void GameState::Initialize()
 	Mesh Ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
 	mGround.meshBuffer.Initialize(Ground);
 	mGround.diffuseMapId = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
-	
-	Mesh ball = MeshBuilder::CreateSphere(60, 60, 1.0f);
-	mBall.meshBuffer.Initialize(ball);
-	mBall.diffuseMapId = TextureManager::Get()->LoadTexture("misc/basketball.jpg");
-	mBall.transform.position.y = 5.0f;
+	mGroundShape.InitializeHull({ 5.0f,0.5f,5.0f }, { 0.0f,-0.5f,0.0f });
+	mGroundRB.Initialize(mGround.transform, mGroundShape, 0.0f);
+
+	int numBalls = 5;
+	float ballRadius = 1.0f;
+	TextureId ballMapId = TextureManager::Get()->LoadTexture("misc/basketball.jpg");
+	Mesh ball = MeshBuilder::CreateSphere(60, 60, ballRadius);
+	mBalls.resize(numBalls);
+	for (int i = 0; i < numBalls; ++i)
+	{
+		BallInfo& newBall = mBalls[i];
+		newBall.ball.meshBuffer.Initialize(ball);
+		newBall.ball.diffuseMapId = ballMapId;
+		newBall.ball.transform.position.y = 4.0f + static_cast<float>(rand() % 5);
+		newBall.ball.transform.position.x = static_cast<float>(rand() % 10) - 5.0f;
+		newBall.ball.transform.position.z = static_cast<float>(rand() % 10) - 5.0f;
+		newBall.ballShape.InitializeSphere(ballRadius + 0.2f);
+		newBall.ballRB.Initialize(newBall.ball.transform, newBall.ballShape, 1.0f);
+	}
 }
 void GameState::Terminate()
 {
-	mBallRB.Terminate();
-	mBallShape.Terminate();
-	mBall.Terminate();
+	for (BallInfo& ballInfo : mBalls)
+	{
+		ballInfo.ballRB.Terminate();
+		ballInfo.ballShape.Terminate();
+		ballInfo.ball.Terminate();
+	}
 	mGroundRB.Terminate();
 	mGroundShape.Terminate();
 	mGround.Terminate();
@@ -42,6 +59,17 @@ void GameState::Terminate()
 void GameState::Update(const float deltaTime)
 {
 	UpdateCameraControl(deltaTime);
+	auto input = Input::InputSystem::Get();
+	if (input->IsKeyPressed(KeyCode::SPACE))
+	{
+		for (BallInfo& ballInfo : mBalls)
+		{
+			Vector3 pos = ballInfo.ball.transform.position;
+			pos = -pos;
+			pos.y = 10.0f;
+			ballInfo.ballRB.SetVelocity(Normalize(pos) * (static_cast<float>(rand() % 5) + 5.0f));
+		}
+	}
 }
 void GameState::Render()
 {
@@ -49,8 +77,12 @@ void GameState::Render()
 	SimpleDraw::Render(mCamera);
 
 	mStandardEffect.Begin();
-		
-		mStandardEffect.Render(mGround);
+
+	mStandardEffect.Render(mGround);
+	for (BallInfo& ballInfo : mBalls)
+	{
+		mStandardEffect.Render(ballInfo.ball);
+	}
 	mStandardEffect.End();
 
 }
@@ -69,6 +101,7 @@ void GameState::DebugUI()
 		ImGui::ColorEdit4("Specular##Light", &mDirectionalLight.specular.r);
 	}
 	mStandardEffect.DebugUI();
+	Physics::PhysicsWorld::Get()->DebugUI();
 	ImGui::End();
 }
 void GameState::UpdateCameraControl(float deltaTime)

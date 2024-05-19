@@ -3,11 +3,16 @@
 //framework headers
 #include <Math/Inc/SpMath.h>
 #include <Core/Inc/Core.h>
+#include <Graphics/Inc/Colors.h>
 #include <Graphics/Inc/Transform.h>
 
 //bullet files
 #include <Bullet/btBulletCollisionCommon.h>
 #include <Bullet/btBulletDynamicsCommon.h>
+#include <Bullet/BulletSoftBody/btSoftRigidDynamicsWorld.h>
+#include <Bullet/BulletSoftBody/btSoftBodyHelpers.h>
+#include <Bullet/BulletSoftBody/btSoftBodyRigidBodyCollisionConfiguration.h>
+#include <Bullet/BulletSoftBody/btSoftBodySolvers.h>
 
 //functions
 template<class T>
@@ -31,6 +36,15 @@ inline SpringEngine::Math::Vector3 ConvertTobtVector3(const btVector3& v)
 		static_cast<float>(v.getX()),
 		static_cast<float>(v.getY()),
 		static_cast<float>(v.getZ())
+	};
+}
+inline SpringEngine::Color ConvertToColor(const btVector3& v)
+{
+	return {
+		static_cast<float>(v.getX()),
+		static_cast<float>(v.getY()),
+		static_cast<float>(v.getZ()),
+		1.0f
 	};
 }
 inline btQuaternion ConvertTobtQuaternion(const SpringEngine::Math::Quaternion& q)
