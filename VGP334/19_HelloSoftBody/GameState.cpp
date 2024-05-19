@@ -20,69 +20,40 @@ void GameState::Initialize()
 	mStandardEffect.SetCamera(mCamera);
 	mStandardEffect.SetDirectionalLight(mDirectionalLight);
 
-	Mesh Ground = MeshBuilder::CreateGroundPlane(10, 10, 1.0f);
-	mGround.meshBuffer.Initialize(Ground);
-	mGround.diffuseMapId = TextureManager::Get()->LoadTexture("misc/concrete.jpg");
-	mGroundShape.InitializeHull({ 5.0f,0.5f,5.0f }, { 0.0f,-0.5f,0.0f });
-	mGroundRB.Initialize(mGround.transform, mGroundShape, 0.0f);
-
-	int numBalls = 5;
-	float ballRadius = 1.0f;
-	TextureId ballMapId = TextureManager::Get()->LoadTexture("misc/basketball.jpg");
-	Mesh ball = MeshBuilder::CreateSphere(60, 60, ballRadius);
-	mBalls.resize(numBalls);
-	for (int i = 0; i < numBalls; ++i)
+	int rows = 10;
+	int cols = 10;
+	mClothMesh = MeshBuilder::CreateGroundPlane(rows, cols, 1.0f);
+	for (auto& v : mClothMesh.vertices)
 	{
-		BallInfo& newBall = mBalls[i];
-		newBall.ball.meshBuffer.Initialize(ball);
-		newBall.ball.diffuseMapId = ballMapId;
-		newBall.ball.transform.position.y = 4.0f + static_cast<float>(rand() % 5);
-		newBall.ball.transform.position.x = static_cast<float>(rand() % 10) - 5.0f;
-		newBall.ball.transform.position.z = static_cast<float>(rand() % 10) - 5.0f;
-		newBall.ballShape.InitializeSphere(ballRadius + 0.2f);
-		newBall.ballRB.Initialize(newBall.ball.transform, newBall.ballShape, 1.0f);
+		v.position.y = 10.0f;
 	}
+
+	int lastVertex = mClothMesh.vertices.size() - 1;
+	int lastVertexOppside = lastVertex - rows;
+
+	mClothSB.Initialize(mClothMesh, 1.0f, { lastVertex,lastVertexOppside });
+	mCloth.meshBuffer.Initialize(nullptr, sizeof(Vertex), mClothMesh.vertices.size(),
+		mClothMesh.indices.data(), mClothMesh.indices.size());
+	mCloth.diffuseMapId = TextureManager::Get()->LoadTexture("planets/jupiter.jpg");
 }
 void GameState::Terminate()
 {
-	for (BallInfo& ballInfo : mBalls)
-	{
-		ballInfo.ballRB.Terminate();
-		ballInfo.ballShape.Terminate();
-		ballInfo.ball.Terminate();
-	}
-	mGroundRB.Terminate();
-	mGroundShape.Terminate();
-	mGround.Terminate();
+	mCloth.Terminate();
+	mClothSB.Terminate();
 	mStandardEffect.Terminate();
 }
 void GameState::Update(const float deltaTime)
 {
 	UpdateCameraControl(deltaTime);
-	auto input = Input::InputSystem::Get();
-	if (input->IsKeyPressed(KeyCode::SPACE))
-	{
-		for (BallInfo& ballInfo : mBalls)
-		{
-			Vector3 pos = ballInfo.ball.transform.position;
-			pos = -pos;
-			pos.y = 10.0f;
-			ballInfo.ballRB.SetVelocity(Normalize(pos) * (static_cast<float>(rand() % 5) + 5.0f));
-		}
-	}
 }
 void GameState::Render()
 {
 	SimpleDraw::AddGroundPlane(10.0f, Colors::White);
 	SimpleDraw::Render(mCamera);
 
+	mCloth.meshBuffer.Update(mClothMesh.vertices.data(),mClothMesh.vertices.size());
 	mStandardEffect.Begin();
-
-	mStandardEffect.Render(mGround);
-	for (BallInfo& ballInfo : mBalls)
-	{
-		mStandardEffect.Render(ballInfo.ball);
-	}
+		mStandardEffect.Render(mCloth);
 	mStandardEffect.End();
 
 }

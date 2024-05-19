@@ -44,6 +44,7 @@ namespace SpringEngine
 
 		void DebugUI();
 
+		//void SetCamera();
 		template<class Effect>
 		void Render(Effect& effect)
 		{
